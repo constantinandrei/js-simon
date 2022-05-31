@@ -23,7 +23,7 @@ const descriptionOutput = document.getElementById('description');
 
 // variabili per salvare il tempo
 
-let countDown = 3;
+let countDown = 30;
 let myTimeout;
 let mySecondTimeout;
 
@@ -44,6 +44,7 @@ function randomNumbers (){
 // funzione che prende un array di numeri e li inserisce nell'area di gioco
 
 function renderNumbers (element, numbersArray){
+    element.innerHTML = '';
     for (let i = 0; i < numbersArray.length; i++){
         const myElement = document.createElement('div');
         myElement.classList.add('number-style');
@@ -78,6 +79,7 @@ function stopCountDown (numbers) {
             clearInterval(mySecondTimeout);
             // chiedo all'utente i numeri
             while (numbersArray.length < 5){
+                numbersOutput.innerHTML = '';
                 let number = parseInt(prompt('Inserire uno dei 5 numeri'));
                 if (isNaN(number)) {
                     alert('Inserire un numero valido')
@@ -93,10 +95,16 @@ function stopCountDown (numbers) {
                     correctNumbers.push(numbersArray[i])
                 }
             }
+
+            descriptionOutput.innerHTML = `numeri ricordati: ${correctNumbers.length}`
+            renderNumbers(numbersOutput, correctNumbers);
+            myTimeout = undefined;
+            mySecondTimeout = undefined;
+            countDown = 30;
         }
     }, 1000)
 
-    return correctNumbers;
+
 }
 
 //event listener sul pulsante gioca
@@ -109,7 +117,5 @@ playButton.addEventListener('click', function(){
     renderNumbers(numbersOutput, numbers);
     renderCountDown(timerOutput);
     let correctNumbers = stopCountDown(numbers);
-    
-    
 
 })
