@@ -48,6 +48,7 @@ function renderNumbers (element, numbersArray){
     for (let i = 0; i < numbersArray.length; i++){
         const myElement = document.createElement('div');
         myElement.classList.add('number-style');
+        myElement.classList.add('bg-info');
         myElement.innerHTML = numbersArray[i];
         element.appendChild(myElement);
     }
@@ -75,11 +76,16 @@ function stopCountDown (numbers) {
     mySecondTimeout = setInterval(function(){
 
         if (countDown < 0){
+            numbersOutput.innerHTML = '';
+            timerOutput.innerHTML = '';
             clearInterval(myTimeout);
             clearInterval(mySecondTimeout);
-            // chiedo all'utente i numeri
+
+            //timeout inserito per dare tempo all browser di fare il render del DOM, sennò si blocca con il ciclo while e i numeri sono ancora mostrati
+            setTimeout( function(){ 
+              // chiedo all'utente i numeri
             while (numbersArray.length < 5){
-                numbersOutput.innerHTML = '';
+                
                 let number = parseInt(prompt('Inserire uno dei 5 numeri'));
                 if (isNaN(number)) {
                     alert('Inserire un numero valido')
@@ -89,7 +95,7 @@ function stopCountDown (numbers) {
                 else {
                 numbersArray.push(number)}
             }
-
+            // controllo quanti numeri ha ricordato
             for (let i = 0; i < numbersArray.length; i++){
                 if (numbers.indexOf(numbersArray[i]) !== -1){
                     correctNumbers.push(numbersArray[i])
@@ -100,7 +106,7 @@ function stopCountDown (numbers) {
             renderNumbers(numbersOutput, correctNumbers);
             myTimeout = undefined;
             mySecondTimeout = undefined;
-            countDown = 30;
+            countDown = 30;}, 500)
         }
     }, 1000)
 
