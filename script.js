@@ -81,7 +81,8 @@ function stopCountDown (numbers) {
             clearInterval(myTimeout);
             clearInterval(mySecondTimeout);
 
-            //timeout inserito per dare tempo all browser di fare il render del DOM, sennò si blocca con il ciclo while e i numeri sono ancora mostrati
+            //timeout inserito per dare tempo all browser di fare il render del DOM, 
+            //sennò si blocca con il ciclo while e i numeri sono ancora a schermo
             setTimeout( function(){ 
               // chiedo all'utente i numeri
             while (numbersArray.length < 5){
